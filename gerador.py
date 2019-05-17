@@ -1,12 +1,20 @@
 from tkinter import *
 from tkinter.ttk import Combobox
+from datetime import datetime
 
 carregamento = str
 tipoMaterial = str
 valorFalta = str
 valorSobra = str
-data = str
-digi = str 
+digi = str
+status1 = str
+falta1 = str
+sobra1 = str
+tFalha = str
+imgCarregamento1 = str
+imgCheck1 = str
+now = datetime.now()
+data = now.strftime("%d/%m/%Y")
 
 
 
@@ -114,18 +122,12 @@ class Programa(object):
         tipoFalha = Combobox(tela, value = opcoes3, width = "15")
         tipoFalha.place(x=135, y = 160)
 
-        #Data
-
-        dataLabel = Label(tela, text = "Data: ", bg = "light grey", fg = "black", font = ("arial",13))
-        dataLabel.place(x = 320, y = 160)
-        data1 = Entry(tela, text= "", bg = "white", fg = "black", bd = 2, width = "13")
-        data1.place(x=370, y = 160)
 
         #Detalhe
 
         detalheLabel = Label(tela, text = "Detalhe: ", bg = "light grey", fg = "black", font = ("arial",13))
         detalheLabel.place(x= 20, y = 250)
-        escre = Entry(tela, text= "", bg = "white", fg = "black", bd = 2, width = "13")
+        escre = Text(tela, width = "90", height = "10")
         escre.place(x=20, y = 280)
 
         def enviar():
@@ -133,19 +135,30 @@ class Programa(object):
             tipoMaterial = str(material.get())
             valorFalta = str(vFalta.get())
             valorSobra = str(vsobra.get())
-            data = str(data1.get())
-            digi = str(escre.get())
+            digi = str(escre.get(1.0, END))
+            status1 = str(status.get())
+            falta1 = str(falta.get())
+            sobra1 = str(sobra.get())
+            tFalha = str(tipoFalha.get())
+            imgCarregamento1 = str(imgCarregamento.get())
+            imgCheck1 = str(imgCheckout.get())
             
             
             
             
-            arquivo = open("Relatorio De Analise De Vale {}.txt" .format(carregamento),"w")
+            arquivo = open("Relatorio De Analise De Vale {}.xls" .format(carregamento),"w")
 
-            arquivo.write(tipoMaterial)
-            arquivo.write(valorFalta)
-            arquivo.write(valorSobra)
-            arquivo.write(data)
-            arquivo.write(digi)
+            arquivo.write("{} \n" .format(tipoMaterial))
+            arquivo.write("{} \n" .format(valorFalta))
+            arquivo.write("{} \n" .format(valorSobra))
+            arquivo.write("{} \n" .format(data))
+            arquivo.write("{} \n" .format(digi))
+            arquivo.write("{} \n" .format(status1))
+            arquivo.write("{} \n" .format(falta1))
+            arquivo.write("{} \n" .format(sobra1))
+            arquivo.write("{} \n" .format(tFalha))
+            arquivo.write("{} \n" .format(imgCarregamento1))
+            arquivo.write("{} \n" .format(imgCheck1))
             
 
         def fechar():
@@ -159,13 +172,6 @@ class Programa(object):
         btnFechar = Button(tela, width = "15", text = "Fechar", command = fechar)
         btnFechar.place(x = 650, y = 460)
 
-        
-
-        
-
-
-
-    
         
 
 Programa()
