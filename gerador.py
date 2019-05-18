@@ -146,7 +146,7 @@ class Programa(object):
             
             
             
-            arquivo = open("Relatorio De Analise De Vale {}.xls" .format(carregamento),"w")
+            arquivo = open("Relatorio De Analise De Vale {}.txt" .format(carregamento),"w")
 
             arquivo.write("{} \n" .format(tipoMaterial))
             arquivo.write("{} \n" .format(valorFalta))
