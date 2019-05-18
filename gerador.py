@@ -1,8 +1,12 @@
 from tkinter import *
 from tkinter.ttk import Combobox
 from datetime import datetime
+from reportlab.pdfgen import canvas
+
 
 carregamento = str
+vale1 = str
+nome = str
 tipoMaterial = str
 valorFalta = str
 valorSobra = str
@@ -11,6 +15,7 @@ status1 = str
 falta1 = str
 sobra1 = str
 tFalha = str
+avaria1 = str
 imgCarregamento1 = str
 imgCheck1 = str
 now = datetime.now()
@@ -40,23 +45,26 @@ class Programa(object):
 
         self.canvas = Canvas(self.frame, bg ="light grey", width="800", height="500", cursor = 'hand2')
         self.canvas.pack()
+        
+        relatorioLabel = Label(tela, text = "Relatório de Analise de Vale ",bg = "light grey", fg = "black", font = ("arial",17))
+        relatorioLabel.place(x= 250, y = 15)
 
         #Carregamento
         carregamentoLabel = Label(tela, text = "N° Carregamento: ",bg = "light grey", fg = "black", font = ("arial",13))
-        carregamentoLabel.place(x= 20, y = 50)
+        carregamentoLabel.place(x= 20, y = 70)
         
-        nCarregamento = Entry(tela, text= "", bg = "white", fg = "black", bd = 2)
-        nCarregamento.place(x=160, y = 50)
+        nCarregamento = Entry(tela, text= "", bg = "white", fg = "black", bd = 2, width="10")
+        nCarregamento.place(x=160, y = 70)
         
 
 
         #Tipo De Material
 
         materialLabel = Label(tela, text = "Tipo de Material: ",bg = "light grey", fg = "black", font = ("arial",13))
-        materialLabel.place(x= 310, y = 50)
+        materialLabel.place(x= 240, y = 70)
         
-        material = Entry(tela, text= "", bg = "white", fg = "black", bd = 2)
-        material.place(x=440, y = 50)
+        material = Entry(tela, text= "", bg = "white", fg = "black", bd = 2, width= "15")
+        material.place(x=370, y = 70)
         
 
         #Options
@@ -67,68 +75,95 @@ class Programa(object):
 
         #Falta
         faltaLabel = Label(tela, text = "Falta: ", bg = "light grey", fg = "black", font = ("arial",13))
-        faltaLabel.place(x = 20, y = 90)
-        falta = Combobox(tela, value = opcoes1, width="11")
-        falta.place(x=70, y = 90)
+        faltaLabel.place(x = 20, y = 105)
+        falta = Combobox(tela, value = opcoes1, width="5")
+        falta.place(x=70, y = 105)
 
         #Valor da Falta
 
-        vFaltaLabel = Label(tela, text = "Valor da falta: ", bg = "light grey", fg = "black", font = ("arial",13))
-        vFaltaLabel.place(x = 170, y = 90)
-        vFalta = Entry(tela, text= "", bg = "white", fg = "black", bd = 2, width = "11")
-        vFalta.place(x=280, y = 90)
+        vFaltaLabel = Label(tela, text = "Valor: ", bg = "light grey", fg = "black", font = ("arial",13))
+        vFaltaLabel.place(x = 130, y = 105)
+        vFalta = Entry(tela, text= "", bg = "white", fg = "black", bd = 2, width = "9")
+        vFalta.place(x=180, y = 105)
 
         #Sobra
         sobraLabel = Label(tela, text = "Sobra: ", bg = "light grey", fg = "black", font = ("arial",13))
-        sobraLabel.place(x = 380, y = 90)
-        sobra = Combobox(tela, value = opcoes1, width="11")
-        sobra.place(x=440, y = 90)
+        sobraLabel.place(x = 270, y = 105)
+        sobra = Combobox(tela, value = opcoes1, width="5")
+        sobra.place(x=330, y = 105)
 
          #Valor da Sobra
 
-        vSobraLabel = Label(tela, text = "Valor da sobra: ", bg = "light grey", fg = "black", font = ("arial",13))
-        vSobraLabel.place(x = 555, y = 90)
-        vsobra = Entry(tela, text= "", bg = "white", fg = "black", bd = 2, width = "11")
-        vsobra.place(x=675, y = 90)
-
-
+        vSobraLabel = Label(tela, text = "Valor: ", bg = "light grey", fg = "black", font = ("arial",13))
+        vSobraLabel.place(x = 390, y = 105)
+        vsobra = Entry(tela, text= "", bg = "white", fg = "black", bd = 2, width = "9")
+        vsobra.place(x=440, y = 105)
+        
+        
+        #Avaria
+        
+        avariaLabel = Label(tela, text = "Avaria: ", bg = "light grey", fg = "black", font = ("arial",13))
+        avariaLabel.place(x = 510, y = 105)
+        avaria = Combobox(tela, value = opcoes1, width="5")
+        avaria.place(x=570, y = 105)
 
         #Status
 
         statusLabel = Label (tela, text = "Status: ", bg = "light grey", fg = "black", font = ("arial",13))
-        statusLabel.place(x = 580, y = 50)
-        status = Combobox(tela, value = opcoes2, width = "14")
-        status.place(x=640, y = 50)
+        statusLabel.place(x = 630, y = 105)
+        status = Combobox(tela, value = opcoes2, width = "9")
+        status.place(x=690, y = 105)
 
+
+        #Nome Motorista
+        
+    
+        nomeLabel = Label(tela, text = "Nome do Motorista: ",bg = "light grey", fg = "black", font = ("arial",13))
+        nomeLabel.place(x = 485, y = 70)
+        
+        nMotorista = Entry(tela, text= "", bg = "white", fg = "black", bd = 2, width="21")
+        nMotorista.place(x=635, y = 70)
+        
+
+       
         #Imagem do Carregamento
 
         imgCarregamentoLabel = Label (tela, text = "Imagem do Carregamento: ", bg = "light grey", fg = "black", font = ("arial",13))
-        imgCarregamentoLabel.place(x = 20, y = 125)
-        imgCarregamento = Combobox(tela, value = opcoes1, width = "14")
-        imgCarregamento.place(x=230, y = 125)
+        imgCarregamentoLabel.place(x = 20, y = 135)
+        imgCarregamento = Combobox(tela, value = opcoes1, width = "5")
+        imgCarregamento.place(x=230, y = 135)
         
 
         #Imagem do Checkout
 
         imgCheckoutLabel = Label (tela, text = "Imagem do Check-Out: ", bg = "light grey", fg = "black", font = ("arial",13))
-        imgCheckoutLabel.place(x = 415, y = 125)
-        imgCheckout = Combobox(tela, value = opcoes1, width = "14")
-        imgCheckout.place(x=600, y = 125)
+        imgCheckoutLabel.place(x = 295, y = 135)
+        imgCheckout = Combobox(tela, value = opcoes1, width = "5")
+        imgCheckout.place(x=480, y = 135)
 
         #Tipo de falha
 
         tipoFalhaLabel = Label (tela, text = "Tipo de falha: ", bg = "light grey", fg = "black", font = ("arial",13))
-        tipoFalhaLabel.place(x = 20, y = 160)
-        tipoFalha = Combobox(tela, value = opcoes3, width = "15")
-        tipoFalha.place(x=135, y = 160)
+        tipoFalhaLabel.place(x = 540, y = 135)
+        tipoFalha = Combobox(tela, value = opcoes3, width = "14")
+        tipoFalha.place(x=660, y = 135)
+        
+        #Numero vale
+        
+    
+        valeLabel = Label(tela, text = "Número do Vale: ",bg = "light grey", fg = "black", font = ("arial",13))
+        valeLabel.place(x = 20, y = 165)
+        
+        nVale = Entry(tela, text= "", bg = "white", fg = "black", bd = 2, width="20")
+        nVale.place(x=150, y = 165)
 
 
         #Detalhe
 
         detalheLabel = Label(tela, text = "Detalhe: ", bg = "light grey", fg = "black", font = ("arial",13))
-        detalheLabel.place(x= 20, y = 250)
-        escre = Text(tela, width = "90", height = "10")
-        escre.place(x=20, y = 280)
+        detalheLabel.place(x= 20, y = 230)
+        escre = Text(tela, width = "92", height = "10")
+        escre.place(x=20, y = 260)
 
         def enviar():
             carregamento = str(nCarregamento.get())
@@ -136,29 +171,118 @@ class Programa(object):
             valorFalta = str(vFalta.get())
             valorSobra = str(vsobra.get())
             digi = str(escre.get(1.0, END))
-            status1 = str(status.get())
+            avaria1 = str(avaria.get())
             falta1 = str(falta.get())
             sobra1 = str(sobra.get())
             tFalha = str(tipoFalha.get())
             imgCarregamento1 = str(imgCarregamento.get())
             imgCheck1 = str(imgCheckout.get())
+            nome = str(nMotorista.get())
+            status1 = str(status.get())
+            vale1 = str(nVale.get())
             
+            #DESENHO PDF
             
-            
-            
-            arquivo = open("Relatorio De Analise De Vale {}.txt" .format(carregamento),"w")
+            c = canvas.Canvas("Relatorio De Analise De Vale {}.pdf" .format(carregamento))
+            c.setFont('Helvetica', 12)
 
-            arquivo.write("{} \n" .format(tipoMaterial))
-            arquivo.write("{} \n" .format(valorFalta))
-            arquivo.write("{} \n" .format(valorSobra))
-            arquivo.write("{} \n" .format(data))
-            arquivo.write("{} \n" .format(digi))
-            arquivo.write("{} \n" .format(status1))
-            arquivo.write("{} \n" .format(falta1))
-            arquivo.write("{} \n" .format(sobra1))
-            arquivo.write("{} \n" .format(tFalha))
-            arquivo.write("{} \n" .format(imgCarregamento1))
-            arquivo.write("{} \n" .format(imgCheck1))
+            c.drawString(25,800,"                          PROCESSO ADMINISTRATIVO - LAUDO DE ANALISE TÉCNICA")
+            c.setFont('Helvetica', 12)
+
+            #Retangulo
+            c.rect(25, 435, 550, 350, fill=0) #coluna, linha, largura, tamanho
+            c.setFont("Helvetica-Bold", 12)
+            c.drawString(27,770,"Logística Reversa: ") 
+            #c.setFont('Helvetica', 12)
+            c.setFont("Helvetica", 12)
+            
+            c.drawString(27,720,"Avaria: {}" .format(avaria1))
+            c.setFont('Helvetica', 12)
+            
+            c.drawString(120,720,"Falta: {}" .format(falta1))
+            c.setFont('Helvetica', 12)
+            
+            c.drawString(200,720,"Sobra: {}" .format(sobra1))
+            c.setFont('Helvetica', 12)
+            
+            c.drawString(280,720,"Val. falta: R$ {}" .format(valorFalta))
+            c.setFont('Helvetica', 12)
+            
+            c.drawString(420,720,"Val. sobra: R$ {}" .format(valorSobra))
+            c.setFont('Helvetica', 12)
+            
+            c.drawString(27,700,"Tipo de material: {}" .format(tipoMaterial))
+            c.setFont('Helvetica', 12)
+            
+            c.drawString(220,700,"Tipo de falha: {}" .format(tFalha))
+            c.setFont('Helvetica', 12)
+            
+            c.drawString(27,680,"Imagem do carregamento: {}" .format(imgCarregamento1))
+            c.setFont('Helvetica', 12)
+            
+            c.drawString(250,680,"Imagem do Check-Out: {}" .format(imgCheck1))
+            c.setFont('Helvetica', 12)
+            
+            c.drawString(440,680,"Status: {}" .format(status1))
+            c.setFont("Helvetica-Bold", 12)
+            
+            c.drawString(27,600,"Laudo: ")
+            c.setFont('Helvetica', 12)
+            
+            
+            c.drawString(27,580,"{} " .format(digi))
+            c.setFont('Helvetica', 12)
+            
+            c.line(27,450,200,450)
+            
+            c.drawString(27, 440, "               Analista")
+            c.setFont('Helvetica', 10)
+            
+            c.drawString(450, 440, " Data: {}" .format(data))
+            c.setFont('Helvetica', 10)
+            
+            #Parte do transporte
+            
+            c.rect(25, 180, 550, 250, fill=0) #coluna, linha, largura, tamanho
+            c.setFont("Helvetica-Bold", 12)
+            c.drawString(27,415,"Transporte: ")
+            c.setFont("Helvetica-Bold", 12)
+            
+            c.drawString(27,380,"Laudo: ")
+            c.setFont('Helvetica', 11)
+            
+            
+            c.drawString(27,300,"Ass. Aprovação: ____________________ Data: ___/___/____ Status: _________")
+            c.drawString(27,270,"Eu, {} declaro que fui comunicado, tive acesso a analise realizada e".format(nome))
+            c.setFont('Helvetica', 11)
+            c.drawString(27,260,"estou ciente do desconto do vale ({}) tratado nesse processo.".format(vale1))
+            
+            c.drawString(27,210,"_______________________              _______________________             _______________________ ")
+            
+            c.drawString(27,190,"{}" .format(nome))
+            
+            c.drawString(200,190,"               TESTEMUNHA                                    TESTEMUNHA" .format(nome))
+            
+            
+            
+            
+            
+            #Parte DRH
+            
+            c.rect(25, 50, 550, 120, fill=0) #coluna, linha, largura, tamanho
+            
+            c.setFont("Helvetica-Bold", 12)
+            c.drawString(27,153,"DRH: ")
+            
+            c.setFont("Helvetica", 12)
+            
+            c.drawString(27,100, "Autorizado desconto no valor de R$:______________ Data: ___/___/____")
+            c.drawString(27,80, "Abonado:______________ Data: ___/___/____")
+            
+            
+            c.save()
+            
+        
             
 
         def fechar():
