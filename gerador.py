@@ -2,6 +2,8 @@ from tkinter import *
 from tkinter.ttk import Combobox
 from datetime import datetime
 from reportlab.pdfgen import canvas
+from tkinter.messagebox import *
+import webbrowser
 
 
 carregamento = str
@@ -170,7 +172,7 @@ class Programa(object):
             tipoMaterial = str(material.get())
             valorFalta = str(vFalta.get())
             valorSobra = str(vsobra.get())
-            digi = str(escre.get(1.0, END))
+            digi = str(escre.get(1.0,END))
             avaria1 = str(avaria.get())
             falta1 = str(falta.get())
             sobra1 = str(sobra.get())
@@ -184,7 +186,7 @@ class Programa(object):
             #DESENHO PDF
             
             c = canvas.Canvas("Relatorio De Analise De Vale {}.pdf" .format(carregamento))
-            c.setFont('Helvetica', 12)
+            c.setFont("Helvetica-Bold", 12)
 
             c.drawString(25,800,"                          PROCESSO ADMINISTRATIVO - LAUDO DE ANALISE TÉCNICA")
             c.setFont('Helvetica', 12)
@@ -193,51 +195,74 @@ class Programa(object):
             c.rect(25, 435, 550, 350, fill=0) #coluna, linha, largura, tamanho
             c.setFont("Helvetica-Bold", 12)
             c.drawString(27,770,"Logística Reversa: ") 
-            #c.setFont('Helvetica', 12)
             c.setFont("Helvetica", 12)
-            
-            c.drawString(27,720,"Avaria: {}" .format(avaria1))
-            c.setFont('Helvetica', 12)
-            
-            c.drawString(120,720,"Falta: {}" .format(falta1))
-            c.setFont('Helvetica', 12)
-            
-            c.drawString(200,720,"Sobra: {}" .format(sobra1))
-            c.setFont('Helvetica', 12)
-            
-            c.drawString(280,720,"Val. falta: R$ {}" .format(valorFalta))
-            c.setFont('Helvetica', 12)
-            
-            c.drawString(420,720,"Val. sobra: R$ {}" .format(valorSobra))
-            c.setFont('Helvetica', 12)
-            
-            c.drawString(27,700,"Tipo de material: {}" .format(tipoMaterial))
-            c.setFont('Helvetica', 12)
-            
-            c.drawString(220,700,"Tipo de falha: {}" .format(tFalha))
-            c.setFont('Helvetica', 12)
-            
-            c.drawString(27,680,"Imagem do carregamento: {}" .format(imgCarregamento1))
-            c.setFont('Helvetica', 12)
-            
-            c.drawString(250,680,"Imagem do Check-Out: {}" .format(imgCheck1))
-            c.setFont('Helvetica', 12)
-            
-            c.drawString(440,680,"Status: {}" .format(status1))
             c.setFont("Helvetica-Bold", 12)
             
-            c.drawString(27,600,"Laudo: ")
+            c.drawString(27,720,"Avaria:")
+            c.setFont('Helvetica', 12)
+            c.drawString(75,720,"{}" .format(avaria1))
+            
+            c.setFont("Helvetica-Bold", 12)
+            c.drawString(120,720,"Falta: ")
+            c.setFont('Helvetica', 12)
+            c.drawString(160,720,"{}" .format(falta1))
+            
+            c.setFont("Helvetica-Bold", 12)
+            c.drawString(200,720,"Sobra:")
+            c.setFont('Helvetica', 12)
+            c.drawString(245,720,"{}" .format(sobra1))
+            
+            c.setFont("Helvetica-Bold", 12)
+            c.drawString(280,720,"Val. falta:  ")
+            c.setFont('Helvetica', 12)
+            c.drawString(340,720,"R$ {}" .format(valorFalta))
+            
+            c.setFont("Helvetica-Bold", 12)
+            c.drawString(420,720,"Val. sobra:  ")
+            c.setFont('Helvetica', 12)
+            c.drawString(490,720,"R$ {}" .format(valorSobra))
+            
+            c.setFont("Helvetica-Bold", 12)
+            c.drawString(27,700,"Tipo de material: ")
+            c.setFont('Helvetica', 12)
+            c.drawString(130,700,"{}" .format(tipoMaterial))
+            
+            c.setFont("Helvetica-Bold", 12)
+            c.drawString(220,700,"Tipo de falha: ")
+            c.setFont('Helvetica', 12)
+            c.drawString(310,700,"{}" .format(tFalha))
+            
+            c.setFont("Helvetica-Bold", 12)
+            c.drawString(27,680,"Imagem do carregamento: ")
+            c.setFont('Helvetica', 12)
+            c.drawString(185,680,"{}" .format(imgCarregamento1))
+            
+            c.setFont("Helvetica-Bold", 12)
+            c.drawString(230,680,"Imagem do Check-Out: ")
+            c.setFont('Helvetica', 12)
+            c.drawString(370,680,"{}" .format(imgCheck1))
+            
+            c.setFont("Helvetica-Bold", 12)
+            c.drawString(430,680,"Status: ")
+            c.setFont("Helvetica", 12)
+            c.drawString(480,680,"{}" .format(status1))
+            
+            c.setFont("Helvetica-Bold", 12)
+            c.drawString(27,600,"Laudo:")
             c.setFont('Helvetica', 12)
             
             
-            c.drawString(27,580,"{} " .format(digi))
-            c.setFont('Helvetica', 12)
+            c.drawString(27,580,"{}".format(digi[0:80]))
+            c.drawString(27,570,"{}".format(digi[81:161]))
+            c.drawString(27,560,"{}".format(digi[162:242]))
+            c.drawString(27,550,"{}".format(digi[322:402]))
+            c.setFont('Helvetica',12)
             
             c.line(27,450,200,450)
             
             c.drawString(27, 440, "               Analista")
-            c.setFont('Helvetica', 10)
             
+            c.setFont("Helvetica-Bold", 12)
             c.drawString(450, 440, " Data: {}" .format(data))
             c.setFont('Helvetica', 10)
             
@@ -281,6 +306,9 @@ class Programa(object):
             
             
             c.save()
+            showinfo(title="Sucesso",message="O relatório foi criado com sucesso!")
+            webbrowser.open("Relatorio De Analise De Vale {}.pdf" .format(carregamento))
+           
             
         
             
