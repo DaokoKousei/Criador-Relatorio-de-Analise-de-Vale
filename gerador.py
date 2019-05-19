@@ -252,10 +252,11 @@ class Programa(object):
             c.setFont('Helvetica', 12)
             
             
-            c.drawString(27,580,"{}".format(digi[0:80]))
-            c.drawString(27,570,"{}".format(digi[81:161]))
-            c.drawString(27,560,"{}".format(digi[162:242]))
-            c.drawString(27,550,"{}".format(digi[322:402]))
+            c.drawString(27,580,"{}".format(digi[0:60]))
+            c.drawString(27,570,"{}".format(digi[61:141]))
+            c.drawString(27,560,"{}".format(digi[142:222]))
+            c.drawString(27,550,"{}".format(digi[302:382]))
+            c.drawString(27,540,"{}".format(digi[383:464]))
             c.setFont('Helvetica',12)
             
             c.line(27,450,200,450)
